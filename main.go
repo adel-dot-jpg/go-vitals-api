@@ -130,6 +130,8 @@ func wsHandler(dockerClient *client.Client) http.HandlerFunc {
 			OriginPatterns: []string{
 				"vitals.adelfaruque.me",
 				"adelfaruque.me",
+				"www.adelfaruque.me",
+				"*.vercel.app",
 				"localhost:*",
 			},
 		})
