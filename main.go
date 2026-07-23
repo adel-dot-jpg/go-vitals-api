@@ -266,7 +266,18 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 }
 
+var allowedOrigins = map[string]bool{
+	"https://adelfaruque.me":     true,
+	"https://www.adelfaruque.me": true,
+	"http://localhost:3000":      true,
+}
+
 func statsHandler(w http.ResponseWriter, r *http.Request) {
+	origin := r.Header.Get("Origin")
+	if allowedOrigins[origin] {
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+	}
+
 	sess, cum, pct := uptimeTracker.Stats()
 
 	w.Header().Set("Content-Type", "application/json")
